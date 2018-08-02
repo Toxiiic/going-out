@@ -1,5 +1,6 @@
 
-const Balls = require('Balls');
+const Balls = require('Balls')
+const AimingLine = require('AimingLine')
 
 cc.Class({
     extends: cc.Component,

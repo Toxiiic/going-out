@@ -4,7 +4,7 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        
+        blockColors:[cc.Color],
     },
 
     // LIFE-CYCLE CALLBACKS:

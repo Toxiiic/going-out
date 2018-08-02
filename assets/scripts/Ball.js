@@ -28,6 +28,12 @@ cc.Class({
         // ptc2.startColor = this.node.color
         // ptc2.endColor = this.node.color
         // ptc2.emissionRate = 50
+
+        //碰撞
+        // otherCollider.getComponent()
+        // if() {
+
+        // }
     },
     // update (dt) {},
 });
