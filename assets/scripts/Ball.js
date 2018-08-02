@@ -12,7 +12,7 @@ cc.Class({
 
     onLoad () {
         this._rb = this.getComponent(cc.RigidBody)
-        this._camera = cc.find('Canvas/Camera')
+        this._camera = cc.find('Canvas/BottomCenter/Camera')
     },
 
     start () {
@@ -23,10 +23,11 @@ cc.Class({
      * 弹出去
      * @param {*} touchPoint 
      */
-    project (touchPoint) {
-        let goodTouch = touchPoint.sub(cc.v2(270, 480))
-        goodTouch.y += this._camera.y
-        var force = goodTouch.sub(this.node.position);
+    project (goodTouchPos) {
+        // let goodTouch = touchPoint.sub(cc.v2(270, 480))
+        // goodTouch.y += this._camera.y
+        // var force = goodTouch.sub(this.node.position);
+        let force = goodTouchPos.sub(this.node.position);
         
         this._rb.applyForceToCenter(force.mulSelf(this.forceMagnification));
     },
@@ -46,11 +47,7 @@ cc.Class({
         // ptc2.endColor = this.node.color
         // ptc2.emissionRate = 50
 
-        //碰撞
-        // otherCollider.getComponent()
-        // if() {
-
-        // }
+        
     },
     // update (dt) {},
 });
