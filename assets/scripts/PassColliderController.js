@@ -1,3 +1,5 @@
+const GlobalEventSystem = require('GlobalEventSystem')
+const GlobalEvent = GlobalEventSystem.GlobalEvent
 
 cc.Class({
     extends: cc.Component,
@@ -6,7 +8,9 @@ cc.Class({
         
     },
 
-    // onLoad () {},
+    onLoad () {
+
+    },
 
     start () {
 
@@ -18,9 +22,14 @@ cc.Class({
     onCollisionEnter: function () {
         this.node.parent.opacity = 255
         this.node.parent.getComponent(cc.PhysicsBoxCollider).enabled = true
-        // 告诉gameController过了一关
+        
+        // 过了一关
+        GlobalEventSystem.notify(GlobalEvent.PassTargetLine, {
+            targetLineNode: this.node.parent
+        })
 
         this.getComponent(cc.BoxCollider).enabled = false
+        //TODO 销毁自己
     },
 
     // update (dt) {},

@@ -1,4 +1,6 @@
 const MapGenerator = require('MapGenerator')
+const GlobalEventSystem = require('GlobalEventSystem')
+const GlobalEvent = GlobalEventSystem.GlobalEvent
 
 cc.Class({
     extends: cc.Component,
@@ -20,6 +22,12 @@ cc.Class({
         cc.director.getCollisionManager().enabled = true
 
         this.mapGenerator = this.getComponent(MapGenerator)
+    
+        //小球过关
+        GlobalEventSystem.on(GlobalEvent.PassTargetLine, payload => {
+            console.log('passed the line & contorller knows', payload)
+        })
+    
     },
     
 

@@ -1,5 +1,9 @@
 const util = require('util')
 
+const getAction = function () {
+    return cc.repeatForever(cc.rotateBy(2, 360))
+}
+
 cc.Class({
     extends: cc.Component,
 
@@ -17,6 +21,8 @@ cc.Class({
             this.generateMaze,
             this.generateDam
         ]
+
+
     },
     start () {
 
@@ -36,6 +42,7 @@ cc.Class({
             col: util.randomInt(4, 6), //几列，x相关
             rowOffset: util.randomInt(-5, 5), //某一行偏移量，x相关
             colOffset: util.randomInt(0, 100) //某一列偏移量，y相关
+            
         }
         console.log(configOpts)
         let fragPrefab1 = this.fragPrefabs[util.randomInt(0, this.fragPrefabs.length)]
@@ -60,6 +67,7 @@ cc.Class({
                 this.blocks.addChild(frag)
 
                 frag.setPosition(col*margin+row*configOpts.rowOffset, row*margin+col*configOpts.colOffset + startY)
+                frag.runAction(getAction())
             }
         }
     },
