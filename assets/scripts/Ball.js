@@ -15,6 +15,8 @@ cc.Class({
     onLoad () {
         this._rb = this.getComponent(cc.RigidBody)
         this._camera = cc.find('Canvas/BottomCenter/Camera')
+        //两次project之间碰撞次数，用来计算分数
+        this._comboTimes = 0
     },
 
     start () {
@@ -36,9 +38,14 @@ cc.Class({
         GlobalEventSystem.notify(GlobalEvent.BALL_PROJECT, {
             ballNode: this.node
         })
+
+        this._comboTimes = 0
     },
 
     onBeginContact: function (contact, selfCollider, otherCollider) {
+
+        this._comboTimes ++
+
         //粒子
         let ptc = cc.instantiate(this.particlePrefab).getComponent(cc.ParticleSystem)
         this.particles.addChild(ptc.node)
@@ -52,6 +59,11 @@ cc.Class({
         // ptc2.startColor = this.node.color
         // ptc2.endColor = this.node.color
         // ptc2.emissionRate = 50
+
+        GlobalEventSystem.notify(GlobalEvent.BALL_COLL, {
+            ballNode: this.node,
+            comboTimes: this._comboTimes
+        })
     },
     // update (dt) {},
 });

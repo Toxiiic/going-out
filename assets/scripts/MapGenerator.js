@@ -27,6 +27,9 @@ cc.Class({
     start () {
 
     },
+    onBallPassTargetLine () {
+        
+    },
     generate () {
         // for(let i=0; i<10; i++) {
         //     let generatorIndex = util.randomInt(0, this.generators.length)

@@ -22,11 +22,12 @@ cc.Class({
         cc.director.getCollisionManager().enabled = true
 
         this.mapGenerator = this.getComponent(MapGenerator)
-    
+        this._score = 0
+
         //小球过关
         GlobalEventSystem.on(GlobalEvent.BALL_PASS_TARGET_LINE, payload => {
             console.log('passed the line & contorller knows', payload)
-            
+            this.mapGenerator.onBallPassTargetLine()
         })
     
     },

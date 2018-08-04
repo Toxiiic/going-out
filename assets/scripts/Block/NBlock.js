@@ -23,6 +23,7 @@ cc.Class({
             if(this._remainN == 0) {
                 //碰碎
                 util.breakBlock(this.node)
+                
             } else {
                 // 拿到label，改变文本
                 // this.getComponentInChildren(cc.Label).string = this._remainN
