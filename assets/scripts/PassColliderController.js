@@ -24,7 +24,7 @@ cc.Class({
         this.node.parent.getComponent(cc.PhysicsBoxCollider).enabled = true
         
         // 过了一关
-        GlobalEventSystem.notify(GlobalEvent.PassTargetLine, {
+        GlobalEventSystem.notify(GlobalEvent.BALL_PASS_TARGET_LINE, {
             targetLineNode: this.node.parent
         })
 

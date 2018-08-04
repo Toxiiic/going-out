@@ -1,4 +1,6 @@
-// Learn cc.Clas
+const GlobalEventSystem = require('GlobalEventSystem')
+const GlobalEvent = GlobalEventSystem.GlobalEvent
+
 cc.Class({
     extends: cc.Component,
 
@@ -30,6 +32,10 @@ cc.Class({
         let force = goodTouchPos.sub(this.node.position);
         
         this._rb.applyForceToCenter(force.mulSelf(this.forceMagnification));
+    
+        GlobalEventSystem.notify(GlobalEvent.BALL_PROJECT, {
+            ballNode: this.node
+        })
     },
 
     onBeginContact: function (contact, selfCollider, otherCollider) {
@@ -46,8 +52,6 @@ cc.Class({
         // ptc2.startColor = this.node.color
         // ptc2.endColor = this.node.color
         // ptc2.emissionRate = 50
-
-        
     },
     // update (dt) {},
 });

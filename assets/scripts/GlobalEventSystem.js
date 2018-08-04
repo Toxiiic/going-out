@@ -1,9 +1,8 @@
 
-
 const EventNames = [
-    'BallColl',
-    'BallAddedForce',
-    'PassTargetLine',
+    'BALL_COLL',
+    'BALL_PROJECT',
+    'BALL_PASS_TARGET_LINE',
 ]
 
 let GlobalEvent = {}
@@ -22,6 +21,7 @@ module.exports = {
         EventHandlers[eventName].forEach(handler => {
             handler(payload)
         })
+        console.log(`%c${eventName}`, 'font-weight:bold;color:yellowgreen')
     },
     on (eventName, handlerCallback) {
         EventHandlers[eventName].push(handlerCallback)

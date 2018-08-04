@@ -24,8 +24,9 @@ cc.Class({
         this.mapGenerator = this.getComponent(MapGenerator)
     
         //小球过关
-        GlobalEventSystem.on(GlobalEvent.PassTargetLine, payload => {
+        GlobalEventSystem.on(GlobalEvent.BALL_PASS_TARGET_LINE, payload => {
             console.log('passed the line & contorller knows', payload)
+            
         })
     
     },
