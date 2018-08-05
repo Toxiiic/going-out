@@ -77,12 +77,12 @@ const runActionByActionInfo = (node, actionInfos, speed) => {
         return cc.sequence(
             actionFn.apply(null, args).easing(cc.easeCubicActionInOut()),
             actionFn.apply(null, backArgs).easing(cc.easeCubicActionInOut())
-        ).repeatForever()
+        )
     });
     if(actions.length > 1) {
-        node.runAction(cc.spawn(actions).speed(speed))
+        node.runAction(cc.spawn(...actions).repeatForever().speed(speed))
     } else if (actions.length == 1) {
-        node.runAction(actions[0].speed(speed))
+        node.runAction(actions[0].repeatForever().speed(speed))
     }
 }
 
