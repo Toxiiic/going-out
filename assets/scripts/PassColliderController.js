@@ -5,7 +5,7 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        
+        targetLineNo: 0
     },
 
     onLoad () {
@@ -25,7 +25,8 @@ cc.Class({
         
         // 过了一关
         GlobalEventSystem.notify(GlobalEvent.BALL_PASS_TARGET_LINE, {
-            targetLineNode: this.node.parent
+            targetLineNode: this.node.parent,
+            targetLineNo: this.targetLineNo
         })
 
         this.getComponent(cc.BoxCollider).enabled = false

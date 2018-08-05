@@ -1,4 +1,5 @@
 const util = require('util')
+const TargetLineCollController = require('PassColliderController')
 
 const actionConfigs = [{
     actionFn: cc.moveBy, //move只能by，参数动态
@@ -8,11 +9,11 @@ const actionConfigs = [{
         min: 2,
         max: 5
     }, {
-        min: -100,
-        max: 100
+        min: 50,
+        max: 150
     }, {
-        min: -100,
-        max: 100
+        min: 50,
+        max: 150
     }]
 }, {
     actionFn: cc.rotateBy, //rotate可by可to，可动可静
@@ -30,8 +31,8 @@ const actionConfigs = [{
     randomFn: util.random,
     getBackArgs: (args) => [args[0], 1/args[1], 1/args[2]],
     argRanges: [{
-        min: 2,
-        max: 5
+        min: 1,
+        max: 2
     }, {
         min: 0.5,
         max: 5
@@ -90,14 +91,17 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
+        levelPadding: 200,
+        firstTargetLineNo: 3,
         blocks: cc.Node,
-        fragPrefabs: [cc.Prefab]
+        targetLineRoot: cc.Node,
+        fragPrefabs: [cc.Prefab],
+        targetLinePrefab: cc.Prefab
     },
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
-        this._lastYPos = 1000
 
         this.generators = [
             this.generateFragments,
@@ -105,18 +109,34 @@ cc.Class({
             this.generateMaze,
             this.generateDam
         ]
+
+        this._lastYPos = 3200
+        this._targetLineNo = this.firstTargetLineNo
     },
     start () {
 
     },
     onBallPassTargetLine () {
-
+        this.generateLevels(3)
+    },
+    generateLevels(amount) {
+        for(let i=0; i<amount; i++) {
+            this.generate()
+        }
     },
     generate () {
-        this.generateFragments()
+        //新建targetLine
+        let targetLineNode = cc.instantiate(this.targetLinePrefab)
+        this.targetLineRoot.addChild(targetLineNode)
+        targetLineNode.getComponentInChildren(TargetLineCollController).targetLineNo = this._targetLineNo
+        this._lastYPos = targetLineNode.y = this._lastYPos + this.levelPadding
+        targetLineNode.x = 270
+        this._targetLineNo ++
+
+        this.generateFragments(this._lastYPos + this.levelPadding)
     },
 
-    generateFragments () {
+    generateFragments (startY) {
         let configOpts = {
             row: util.randomInt(5, 6), //几行，y相关
             col: util.randomInt(4, 6), //几列，x相关
@@ -128,7 +148,7 @@ cc.Class({
         let fragPrefab2 = this.fragPrefabs[util.randomInt(0, this.fragPrefabs.length)]
 
         //TODO
-        let startY = 2200
+        // let startY = this._lastYPos
 
         //屏幕宽度 横向个数 => 间距
         //间距 竖向个数 => 竖向总高
@@ -142,14 +162,14 @@ cc.Class({
         // let speed = randomBool() ? 1 : random(0.5, 3)
         let speed = 1
         
-        let prefab = null
+        let frag = null
         for(let row=0; row<configOpts.row; row++) {
             for(let col=0; col<configOpts.col; col++) {
 
                 //根据位置挑一个prefab
-                prefab = col%2!=0 && row%2!=0 ? fragPrefab1 : fragPrefab2
+                let prefab = col%2!=0 && row%2!=0 ? fragPrefab1 : fragPrefab2
 
-                let frag = cc.instantiate(prefab)
+                frag = cc.instantiate(prefab)
                 this.blocks.addChild(frag)
 
                 frag.setPosition(col*margin+row*configOpts.rowOffset, row*margin+col*configOpts.colOffset + startY)
@@ -158,6 +178,8 @@ cc.Class({
                 // frag.runAction(getAction(actionInfo, speed))
             }
         }
+        //最后一个frag的y位置
+        this._lastYPos = frag.y
     },
     generateMaze () {
         

@@ -27,7 +27,12 @@ cc.Class({
         //小球过关
         GlobalEventSystem.on(GlobalEvent.BALL_PASS_TARGET_LINE, payload => {
             console.log('passed the line & contorller knows', payload)
-            this.mapGenerator.onBallPassTargetLine()
+            let { targetLineNo } = payload
+
+            //  && targetLineNo > 0
+            if(targetLineNo % 3 == 0) {
+                this.mapGenerator.onBallPassTargetLine()
+            }
         })
     
     },
