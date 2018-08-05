@@ -19,14 +19,20 @@ const EventNames = [
 ]
 
 let GlobalEvent = {}
+let eventHandlers = {}
+/* 一局游戏内统计数据 */
+let gameStatData = {}
+/* 要持久化的长期统计数据 */
+//TODO 持久化的读和写
+let persistStatData = {}
+
 EventNames.forEach(eventName => {
     GlobalEvent[eventName] = eventName
+    eventHandlers[eventName] = []
+    gameStatData[eventName] = 0
+    persistStatData[eventName] = 0
 })
 
-let eventHandlers = {}
-EventNames.forEach(eventName => {
-    eventHandlers[eventName] = []
-})
 
 module.exports = {
     GlobalEvent,
@@ -34,8 +40,10 @@ module.exports = {
         eventHandlers[eventName].forEach(handler => {
             handler(payload)
         })
+        gameStatData[eventName] ++
         console.log(`%c${eventName}`, EventLogStyle)
-        console.log('payload: ', payload)
+        // console.log('payload: ', payload, 'gameStatData:', gameStatData)
+
     },
     on (eventName, handlerCallback) {
         eventHandlers[eventName].push(handlerCallback)

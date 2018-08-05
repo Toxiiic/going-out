@@ -1,4 +1,6 @@
 const util = require('./util')
+const GlobalEventSystem = require('GlobalEventSystem')
+const GlobalEvent = GlobalEventSystem.GlobalEvent
 
 cc.Class({
     extends: cc.Component,
@@ -23,7 +25,10 @@ cc.Class({
             if(this._remainN == 0) {
                 //碰碎
                 util.breakBlock(this.node)
-                
+
+                GlobalEventSystem.notify(GlobalEvent.BLOCK_BREAK_N, {
+                    n: this.n
+                })
             } else {
                 // 拿到label，改变文本
                 // this.getComponentInChildren(cc.Label).string = this._remainN
