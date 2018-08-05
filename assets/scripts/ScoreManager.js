@@ -4,8 +4,8 @@ const GlobalEvent = GlobalEventSystem.GlobalEvent
 const MaxBallCollScore = 2000
 
 const EventScoreMap = {
-    'BALL_PASS_TARGET_LINE': 1000,
-    'BLOCK_BREAK_ONE': 10,
+    'BALL_PASS_TARGET_LINE': 66,
+    'BLOCK_BREAK_ONE': 6,
 }
 
 const EventSettingMap = {
@@ -43,10 +43,6 @@ let addScore = deltaScore => {
 
     GlobalEventSystem.notify(GlobalEvent.SCORE_CHANGE, {
         score: _score,
-        deltaScore: deltaScore
+        deltaScore
     })
-}
-
-module.exports = {
-
 }

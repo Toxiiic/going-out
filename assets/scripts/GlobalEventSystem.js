@@ -15,7 +15,8 @@ const EventNames = [
     'BLOCK_BREAK_UNKNOWN',
     'BLOCK_HEART_COLL',
 
-    'SCORE_CHANGE'
+    'SCORE_CHANGE',
+    'HEART_CHANGE',
 ]
 
 let GlobalEvent = {}

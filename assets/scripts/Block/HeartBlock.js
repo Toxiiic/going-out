@@ -1,4 +1,7 @@
 const util = require('./util')
+const GlobalEventSystem = require('GlobalEventSystem')
+const GlobalEvent = GlobalEventSystem.GlobalEvent
+
 
 cc.Class({
     extends: cc.Component,
@@ -16,8 +19,9 @@ cc.Class({
 
     onBeginContact (contact, selfCollider, otherCollider) {
         if(otherCollider.node.name == 'Ball') {
-            //出❤️
+            GlobalEventSystem.notify(GlobalEvent.BLOCK_HEART_COLL)
         }
+
     }
 
     // update (dt) {},
